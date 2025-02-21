@@ -1,0 +1,93 @@
+/*
+ * Copyright 2020 BE-GAIA. All Rights Reserved.
+ */
+
+syntax = "proto3";
+
+package com.be.cube.core.networking.proxy;
+
+// task admin command
+message Command {
+    string name = 1;
+}
+
+message Conf {
+    int64 overallTimeout = 1;           // total timeout, in ms
+    int64 completionWaitTimeout = 2;    // timeout for waiting for complete, in ms
+    int64 packetIntervalTimeout = 3;    // timeout for packet interval, in ms
+    int32 maxRetries = 4;
+}
+
+enum TaskType {
+    PSI = 0;
+    RSS = 1;
+}
+
+// returned by service heartbeat to decide next operation
+enum Operation {
+    START = 0;
+    RUN = 1;
+    STOP = 2;
+    KILL = 3;
+    GET_DATA = 4;
+    PUT_DATA = 5;
+}
+
+enum ServiceType {
+    BASE = 0;
+    CUBE = 1;
+    EDGE = 2;
+    TENSOR = 3;
+    OTHER = 4;
+    CUBE_ENGINE = 5;
+}
+
+// metadata used for network data transfer
+message Metadata {
+    string taskId = 1;                      // task description
+    string fromPartyId = 2;
+    string toPartyId = 3;
+    string operator = 4;                // model operator
+    ServiceType serviceType = 5;                // model operator
+    TaskType taskType = 6;                // task managing command (if any)
+    Operation operation = 7;                // model operator
+    Conf conf = 8;                      // operation config
+    bool find = 9;
+    int32 seq = 10;
+    int32 ack = 11;
+}
+
+// data streaming packet
+message Packet {
+    Metadata header = 1;    // packet header
+    bytes body = 2;          // packet body
+}
+
+message VersionRequest {
+}
+
+message VersionResponse{
+    int32 version = 1;
+}
+
+// data transfer service
+service DataTransferService {
+    rpc push (stream Packet) returns (ServerSummary);
+    rpc pull (Metadata) returns (Packet);
+    rpc unaryCall (Packet) returns (Packet);
+
+    //add at v2
+    rpc get_version (VersionRequest) returns (VersionResponse);
+    rpc push_v2 (stream Packet) returns (stream Packet);
+}
+
+message ServerSummary {
+    // The number of points received.
+    // The number of known features passed while traversing the route.
+    int64 recv_bytes = 1;
+    int64 packet_cnt = 2;
+
+    // The distance covered in metres.
+    // The duration of the traversal in seconds.
+    float elapsed_time = 3;
+}
