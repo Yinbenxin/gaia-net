@@ -496,9 +496,8 @@ namespace gaianet {
             try {
                 // std::string key(fmt::format("net_usage_{}_{}_{}", m_ref_channel.get_taskid(), m_partyid, m_to_partyid));
 
-                std::string key = "net_usage_" +  m_ref_channel.get_taskid() + "_" + 
-                                m_partyid + "_" + 
-                                m_to_partyid;
+                std::string key = "net_usage_" + m_ref_channel.get_taskid() + "_" + std::to_string(m_partyid) + "_"+ std::to_string(m_to_partyid);
+
                 redis_client->hset(key, {std::make_pair("recv_bytes", std::to_string(m_ref_channel.get_bytes_recv())),
                                          std::make_pair("recv_packet", std::to_string(m_ref_channel.get_packet_recv())),
                                          std::make_pair("send_bytes", std::to_string(m_ref_channel.get_bytes_send())),
