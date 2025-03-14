@@ -93,3 +93,5 @@ add_custom_target(clean-all
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/src/protos/
     COMMENT "Cleaning all generated files"
 )
+
+add_subdirectory(test)

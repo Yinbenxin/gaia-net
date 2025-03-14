@@ -8,7 +8,7 @@
 #include <shared_mutex>
 #include <signal.h>
 #include <thread>
-
+#include <fmt/format.h>
 DEFINE_string(taskid, "channel_bench_cpp_", "task id, defalut is 'channel_bench_cpp_'");
 DEFINE_int32(role, -1, "role, defalut value is -1, mean run all role");
 DEFINE_string(type, "grpc", "channel type: 'grpc', 'mem', current default is 'grpc'");
