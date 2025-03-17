@@ -7,13 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # 查找pkg-config依赖
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GRPC++ REQUIRED grpc++)
-pkg_check_modules(PROTOBUF REQUIRED protobuf)
+# pkg_check_modules(PROTOBUF REQUIRED protobuf)
 pkg_check_modules(REDIS++ REQUIRED redis++)
 pkg_check_modules(LZ4 REQUIRED liblz4)
 find_package(gflags REQUIRED)
 find_package(fmt REQUIRED)
+find_package(protobuf REQUIRED)
 
 include_directories(${GRPC++_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS} ${REDIS++_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS})
+
+message(STATUS "CMAKE_SOURCE_DIR:${GRPC++_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS} ${REDIS++_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS}")
 
 # 设置源文件和目标库名
 set(TARGET_NAME gaianet)
