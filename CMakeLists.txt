@@ -10,6 +10,8 @@ pkg_check_modules(GRPC++ REQUIRED grpc++)
 pkg_check_modules(PROTOBUF REQUIRED protobuf)
 pkg_check_modules(REDIS++ REQUIRED redis++)
 pkg_check_modules(LZ4 REQUIRED liblz4)
+find_package(gflags REQUIRED)
+find_package(fmt REQUIRED)
 
 include_directories(${GRPC++_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS} ${REDIS++_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS})
 
@@ -82,6 +84,9 @@ target_link_libraries(${TARGET_NAME}
     pthread 
     dl 
     ${LIBS}
+    gflags
+    fmt
+    
 )
 
 install(TARGETS ${TARGET_NAME} DESTINATION lib)
