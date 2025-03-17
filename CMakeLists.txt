@@ -75,8 +75,8 @@ endif()
 
 # 链接gRPC库
 link_directories(${GRPC++_LIBRARY_DIRS})
-add_library(${TARGET_NAME}  ${SOURCES})
-target_link_libraries(${TARGET_NAME} 
+add_library(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}  
     ${GRPC++_LIBRARIES} 
     ${PROTOBUF_LIBRARIES} 
     ${REDIS++_LIBRARIES} 
@@ -86,12 +86,11 @@ target_link_libraries(${TARGET_NAME}
     ${LIBS}
     gflags
     fmt
-    
 )
 
-install(TARGETS ${TARGET_NAME} DESTINATION lib)
-install(DIRECTORY src/ DESTINATION include FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/src/protos/ DESTINATION include/protos FILES_MATCHING PATTERN "*.h")
+# install(TARGETS ${TARGET_NAME} DESTINATION lib)
+# install(DIRECTORY src/ DESTINATION include FILES_MATCHING PATTERN "*.h")
+# install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/src/protos/ DESTINATION include/protos FILES_MATCHING PATTERN "*.h")
 
 # 清理规则
 add_custom_target(clean-all

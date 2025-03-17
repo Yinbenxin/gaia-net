@@ -8,10 +8,14 @@ find_package(GTest REQUIRED)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/../src
-    ${PKG_INCLUDE_DIRS}
 )
+link_directories(${CMAKE_BINARY_DIR})
+
+#打印路径
+message(STATUS "CMAKE_BINARY_DIR:: ${CMAKE_BINARY_DIR}")
 
 add_executable(channel_bench channel_bench.cpp)
-target_link_libraries(channel_bench ${TARGET_NAME} 
+target_link_libraries(channel_bench gaianet
                         GTest::GTest 
+                        gflags
                         )
