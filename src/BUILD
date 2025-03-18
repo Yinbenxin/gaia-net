@@ -3,7 +3,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_proto_library")
 
 proto_library(
     name = "gaia_proto",
-    srcs = glob(["src/protos/*.proto"]),
+    srcs = glob(["protos/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
@@ -16,13 +16,13 @@ cc_proto_library(
 cc_library(
     name = "gaianet",
     srcs = glob([
-        "src/*.cpp",
-        "src/*.h",
-        "src/gaia_utils/*.h",
+        "*.cpp",
+        "*.h",
+        "gaia_utils/*.h",
     ]),
     hdrs = glob([
-        "src/*.h",
-        "src/gaia_utils/*.h",
+        "*.h",
+        "gaia_utils/*.h",
     ]),
     deps = [
         ":gaia_cc_proto",
@@ -30,7 +30,7 @@ cc_library(
         "@redis_plus_plus//:redis++",
         "@lz4//:lz4",
         "@gflags//:gflags",
-        "@fmt//:fmt",
+        "@com_github_fmtlib_fmt//:fmt",
     ],
     includes = ["src"],
     copts = ["-std=c++17"],

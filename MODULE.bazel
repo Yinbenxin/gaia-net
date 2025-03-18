@@ -1,13 +1,6 @@
-module(
-    name = "gaianet",
-    version = "0.1.0",
-)
-
-bazel_dep(name = "rules_cc", version = "0.0.17")
-bazel_dep(name = "rules_proto", version = "7.0.2")
-bazel_dep(name = "rules_java", version = "5.3.5")
-bazel_dep(name = "fmt", version = "9.1.0")
-bazel_dep(name = "lz4", version = "1.9.4")
-bazel_dep(name = "gflags", version = "2.2.2")
-bazel_dep(name = "googletest", version = "1.14.0.bcr.1")
-bazel_dep(name = "protobuf", version = "29.0")
+###############################################################################
+# Bazel now uses Bzlmod by default to manage external dependencies.
+# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+#
+# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+###############################################################################
