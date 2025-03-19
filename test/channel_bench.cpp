@@ -58,6 +58,7 @@ static inline std::string get_rand_string_fast(uint32_t* seed) {
 }
 
 static inline std::unique_ptr<gaianet::IChannel> create_channel(const std::string& taskid, uint32_t from, uint32_t to) {
+    auto FLAGS_type  = "mem";
     if (FLAGS_type == "grpc") {
         return std::unique_ptr<gaianet::IChannel>(new gaianet::channel(from, to, taskid, FLAGS_server_addr, FLAGS_redis_uri));
     } else if (FLAGS_type == "mem") {

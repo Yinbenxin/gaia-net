@@ -16,36 +16,44 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def yacl_deps():
-    _rule_proto()
-    _rule_python()
+    _bazel_features_version()
     _rules_foreign_cc()
-    _com_google_protobuf()
 
+    _com_google_googletest()
     _com_github_gflags_gflags()
     _com_github_fmtlib_fmt()
+    _com_github_lz4()
+    _com_github_hiredis()
+    _com_github_redis_plus_plus()
+    _com_github_nlohmann_json()
+
+    _build_bazel_apple_support()
+    _build_bazel_rules_apple()
+    _io_bazel_rules_go()
+    _rules_cc()
+    _rule_proto()
+    _rule_python()
     _com_google_protobuf()
-    _com_github_redis_hiredis()
-    _com_github_lz4_lz4()
-    _com_github_grpc()
-    _com_google_googletest()
+    _com_github_grpc_grpc()
+    _bazel_gazelle()
+    _com_google_googleapis()
+
 def _rule_proto():
     maybe(
         http_archive,
         name = "rules_proto",
-        sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
-        strip_prefix = "rules_proto-5.3.0-21.7",
+        strip_prefix = "rules_proto-6.0.0-rc2",
         urls = [
-            "https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz",
+            "https://github.com/bazelbuild/rules_proto/archive/refs/tags/6.0.0-rc2.tar.gz",
         ],
     )
 def _rule_python():
     maybe(
         http_archive,
         name = "rules_python",
-        sha256 = "be04b635c7be4604be1ef20542e9870af3c49778ce841ee2d92fcb42f9d9516a",
-        strip_prefix = "rules_python-0.35.0",
+        strip_prefix = "rules_python-0.36.0",
         urls = [
-            "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.35.0.tar.gz",
+            "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.36.0.tar.gz",
         ],
     )
 def _rules_foreign_cc():
@@ -58,19 +66,7 @@ def _rules_foreign_cc():
             "https://github.com/bazelbuild/rules_foreign_cc/archive/5c34b7136f0dec5d8abf2b840796ec8aef56a7c1.tar.gz",
         ],
     )
-def _com_google_protobuf():
-    maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "2c6a36c7b5a55accae063667ef3c55f2642e67476d96d355ff0acb13dbb47f09",
-        strip_prefix = "protobuf-21.12",
-        type = "tar.gz",
-        patch_args = ["-p1"],
-        patches = ["@yacl//bazel:patches/protobuf.patch"],
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protobuf-all-21.12.tar.gz",
-        ],
-    )
+
 def _com_github_fmtlib_fmt():
     maybe(
         http_archive,
@@ -104,51 +100,10 @@ def _com_google_googletest():
             "https://github.com/google/googletest/archive/refs/tags/v1.15.2.tar.gz",
         ],
     )
-    
-def _com_github_grpc():
+def _com_github_lz4():
     maybe(
         http_archive,
-        name = "com_github_grpc",
-        strip_prefix = "grpc-1.35.0",
-        type = "tar.gz",
-        urls = [
-            "https://github.com/grpc/grpc/archive/refs/tags/v1.35.0.tar.gz",
-        ],
-    )
-
-
-
-def _com_google_protobuf():
-    maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        # sha256 = "2c6a36c7b5a55accae063667ef3c55f2642e67476d96d355ff0acb13dbb47f09",
-        strip_prefix = "protobuf-3.6.1",
-        type = "tar.gz",
-        # patch_args = ["-p1"],
-        # patches = ["@yacl//bazel:patches/protobuf.patch"],
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.6.1.tar.gz",
-        ],
-    )
-
-def _com_github_redis_hiredis():
-    maybe(
-        http_archive,
-        name = "hiredis",
-        strip_prefix = "hiredis-1.2.0",
-        build_file = "//bazel:hiredis.BUILD",
-        type = "tar.gz",
-        urls = [
-            "https://github.com/redis/hiredis/archive/refs/tags/v1.2.0.tar.gz",
-        ],
-    )
-
-
-def _com_github_lz4_lz4():
-    maybe(
-        http_archive,
-        name = "lz4",
+        name = "com_github_lz4",
         strip_prefix = "lz4-1.9.3",
         build_file = "//bazel:lz4.BUILD",
         type = "tar.gz",
@@ -157,3 +112,130 @@ def _com_github_lz4_lz4():
         ],
     )
 
+def _com_github_hiredis():
+    maybe(
+        http_archive,
+        name = "com_github_hiredis",
+        strip_prefix = "hiredis-1.2.0",
+        build_file = "//bazel:hiredis.BUILD",
+        type = "tar.gz",
+        urls = [
+            "https://github.com/redis/hiredis/archive/refs/tags/v1.2.0.tar.gz",
+        ],
+    )
+def _com_github_redis_plus_plus():
+    maybe(
+        http_archive,
+        name = "com_github_redis_plus_plus",
+        strip_prefix = "redis-plus-plus-1.3.13",
+        build_file = "//bazel:redis_plus_plus.BUILD",
+        type = "tar.gz",
+        urls = [
+            "https://github.com/sewenew/redis-plus-plus/archive/refs/tags/1.3.13.tar.gz",
+        ],
+    )
+
+def _com_google_protobuf():
+    maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        strip_prefix = "protobuf-28.2",
+        # build_file = "//bazel:protobuf.BUILD",
+        type = "tar.gz",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v28.2.tar.gz",
+        ],
+    )
+
+def _com_github_grpc_grpc():
+    maybe(
+        http_archive,
+        name = "com_github_grpc_grpc",
+        strip_prefix = "grpc-1.66.0",
+        type = "tar.gz",
+        urls = [
+            "https://github.com/grpc/grpc/archive/refs/tags/v1.66.0.tar.gz",
+        ],
+    )
+
+def _build_bazel_apple_support():
+    maybe(
+        http_archive,
+        name = "build_bazel_apple_support",
+        strip_prefix = "apple_support-1.17.1",
+        urls = [
+            "https://github.com/bazelbuild/apple_support/archive/refs/tags/1.17.1.tar.gz",
+        ],
+    )
+
+def _build_bazel_rules_apple():
+    maybe(
+        http_archive,
+        name = "build_bazel_rules_apple",
+        strip_prefix = "rules_apple-3.9.2",
+        urls = [
+            "https://github.com/bazelbuild/rules_apple/archive/refs/tags/3.9.2.tar.gz",
+        ],
+    )
+
+def _io_bazel_rules_go():
+    maybe(
+        http_archive,
+        name = "io_bazel_rules_go",
+        strip_prefix = "rules_go-0.50.1",
+        urls = [
+            "https://github.com/bazelbuild/rules_go/archive/v0.50.1.tar.gz",
+        ],
+    )
+
+def _rules_cc():
+    maybe(
+        http_archive,
+        name = "rules_cc",
+        strip_prefix = "rules_cc-0.0.9",
+        urls = [
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.9/rules_cc-0.0.9.tar.gz",
+        ],
+    )
+
+def _bazel_gazelle():
+    maybe(
+        http_archive,
+        name = "bazel_gazelle",
+        strip_prefix = "bazel-gazelle-0.39.1",
+        urls = [
+            "https://github.com/bazel-contrib/bazel-gazelle/archive/refs/tags/v0.39.1.tar.gz",
+        ],
+    )
+
+def _com_google_googleapis():
+    maybe(
+        http_archive,
+        name = "com_google_googleapis",
+        sha256 = "0513f0f40af63bd05dc789cacc334ab6cec27cc89db596557cb2dfe8919463e4",
+        strip_prefix = "googleapis-fe8ba054ad4f7eca946c2d14a63c3f07c0b586a0",
+        urls = [
+            "https://github.com/googleapis/googleapis/archive/fe8ba054a.tar.gz",
+        ],
+    )
+
+
+def _bazel_features_version():
+    maybe(
+        http_archive,
+        name = "bazel_features",
+        sha256 = "091d8b1e1f0bf1f7bd688b95007687e862cc489f8d9bc21c14be5fd032a8362f",
+        strip_prefix = "bazel_features-1.26.0",
+        url = "https://github.com/bazel-contrib/bazel_features/releases/download/v1.26.0/bazel_features-v1.26.0.tar.gz"
+    )
+
+def _com_github_nlohmann_json():
+    maybe(
+        http_archive,
+        name = "com_github_nlohmann_json",
+        strip_prefix = "json-3.11.3",
+        build_file = "//bazel:nlohmann_json.BUILD",
+        urls = [
+            "https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.tar.gz",
+        ],
+    )
