@@ -1,8 +1,8 @@
-workspace(name = "yacl")
+workspace(name = "gaia_net")
 
-load("//bazel:repositories.bzl", "yacl_deps")
+load("//bazel:repositories.bzl", "gaia_net_deps")
 
-yacl_deps()
+gaia_net_deps()
 
 load("@rules_python//python:repositories.bzl", "py_repositories")
 

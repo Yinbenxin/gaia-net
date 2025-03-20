@@ -1,4 +1,4 @@
-load("@yacl//bazel:yacl.bzl", "yacl_cmake_external")
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -7,7 +7,7 @@ filegroup(
     srcs = glob(["**"]),
 )
 
-yacl_cmake_external(
+cmake(
     name = "hiredis",
     lib_source = ":all_srcs",
     out_headers_only = True,
