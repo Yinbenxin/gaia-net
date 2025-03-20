@@ -1,17 +1,3 @@
-# Copyright 2021 Ant Group Co., Ltd.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
@@ -171,12 +157,13 @@ def _com_google_protobuf():
         name = "com_google_protobuf",
         sha256 = "b2340aa47faf7ef10a0328190319d3f3bee1b24f426d4ce8f4253b6f27ce16db",
         strip_prefix = "protobuf-28.2",
-        # build_file = "//bazel:protobuf.BUILD",
         type = "tar.gz",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v28.2.tar.gz",
         ],
     )
+
+
 
 def _com_github_grpc_grpc():
     maybe(
@@ -220,7 +207,7 @@ def _com_github_fmtlib_fmt():
         name = "com_github_fmtlib_fmt",
         sha256 = "1cafc80701b746085dddf41bd9193e6d35089e1c6ec1940e037fcb9c98f62365",
         strip_prefix = "fmt-6.1.2",
-        build_file = "//bazel:fmtlib.BUILD",
+        build_file = "@gaia_net//bazel:fmtlib.BUILD",
         type = "tar.gz",
         urls = [
             "https://github.com/fmtlib/fmt/archive/refs/tags/6.1.2.tar.gz",
@@ -233,7 +220,7 @@ def _com_github_lz4():
         name = "com_github_lz4",
         sha256 = "030644df4611007ff7dc962d981f390361e6c97a34e5cbc393ddfbe019ffe2c1",
         strip_prefix = "lz4-1.9.3",
-        build_file = "//bazel:lz4.BUILD",
+        build_file = "@gaia_net//bazel:lz4.BUILD",
         type = "tar.gz",
         urls = [
             "https://github.com/lz4/lz4/archive/refs/tags/v1.9.3.tar.gz",
@@ -246,7 +233,7 @@ def _com_github_hiredis():
         name = "com_github_hiredis",
         sha256 ="82ad632d31ee05da13b537c124f819eb88e18851d9cb0c30ae0552084811588c",
         strip_prefix = "hiredis-1.2.0",
-        build_file = "//bazel:hiredis.BUILD",
+        build_file = "@gaia_net//bazel:hiredis.BUILD",
         type = "tar.gz",
         urls = [
             "https://github.com/redis/hiredis/archive/refs/tags/v1.2.0.tar.gz",
@@ -259,7 +246,7 @@ def _com_github_redis_plus_plus():
         name = "com_github_redis_plus_plus",
         sha256 = "678a61898ed72f0c692102c7ce103a1bcae1e6ff85a4ad03e6002c1ba8fe1e08",
         strip_prefix = "redis-plus-plus-1.3.13",
-        build_file = "//bazel:redis_plus_plus.BUILD",
+        build_file = "@gaia_net//bazel:redis_plus_plus.BUILD",
         type = "tar.gz",
         urls = [
             "https://github.com/sewenew/redis-plus-plus/archive/refs/tags/1.3.13.tar.gz",
