@@ -10,7 +10,7 @@
 
 // #include "// gaialog.h"
 #include "redis_client.h"
-#include "gaia_net/src/protos/gaia_proxy.grpc.pb.h"
+#include "src/protos/gaia_proxy.grpc.pb.h"
 
 #include "channel.h"
 #include <condition_variable>
