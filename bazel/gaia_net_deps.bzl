@@ -94,7 +94,7 @@ def _upb():
         ],
         patch_args = ["-p1"],
         patches = [
-            "//bazel/patches:upb.patch",
+            "@gaia_net//bazel/patches:upb.patch",
         ],
     )
 
@@ -192,7 +192,7 @@ def _com_github_openssl_openssl():
         urls = [
             "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.3.2.tar.gz",
         ],
-        build_file = "//bazel:openssl.BUILD",
+        build_file = "@gaia_net//bazel:openssl.BUILD",
     )
 
 def _com_github_grpc_grpc():
@@ -203,7 +203,7 @@ def _com_github_grpc_grpc():
         strip_prefix = "grpc-1.51.0",
         type = "tar.gz",
         patch_args = ["-p1"],
-        patches = ["//bazel/patches:grpc.patch"],
+        patches = ["@gaia_net//bazel/patches:grpc.patch"],
         urls = [
             "https://github.com/grpc/grpc/archive/refs/tags/v1.51.0.tar.gz",
         ],
