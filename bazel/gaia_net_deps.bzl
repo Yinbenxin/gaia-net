@@ -5,7 +5,6 @@ def gaia_net_deps():
     _rules_foreign_cc()
     _rule_python()
     _rules_cc()
-    # _rule_proto()
 
     _bazel_platform()
     _upb()
@@ -21,10 +20,6 @@ def gaia_net_deps():
     _com_github_lz4()
     _com_github_hiredis()
     _com_github_redis_plus_plus()
-    
-
-
-
 
 def _rules_foreign_cc():
     maybe(
@@ -62,7 +57,6 @@ def _com_github_gflags_gflags():
         ],
     )
 
-
 def _rules_cc():
     maybe(
         http_archive,
@@ -74,8 +68,6 @@ def _rules_cc():
             "https://github.com/bazelbuild/rules_cc/releases/download/0.0.9/rules_cc-0.0.9.tar.gz",
         ],
     )
-
-
 
 def _rule_python():
     maybe(
@@ -105,12 +97,6 @@ def _upb():
             "//bazel/patches:upb.patch",
         ],
     )
-
-
-
-
-
-
 
 def _com_google_googleapis():
     maybe(
