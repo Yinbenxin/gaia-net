@@ -7,6 +7,10 @@ package(default_visibility = ["//visibility:public"])
 proto_library(
     name = "gaia_proto",
     srcs = glob(["protos/*.proto"]),
+    deps = [
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:empty_proto",
+    ],
 )
 
 cc_proto_library(
@@ -48,6 +52,7 @@ cc_library(
     copts = [
         "-I.",
         "-I$(GENDIR)/src",
+        "-I$(GENDIR)/external/com_google_protobuf/src",
     ],
     strip_include_prefix = ".",
 
